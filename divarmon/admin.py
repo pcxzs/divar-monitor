@@ -62,7 +62,8 @@ class AdminPanel:
         self.monitor = monitor
         self.pending: dict[tuple, dict] = {}      # (chat_id, user_id) -> prompt context
         self.pending_links: dict[str, str] = {}   # short id -> pasted URL
-        self.claim_code = secrets.token_hex(3) if not cfg.has_admins() else ""
+        # 64 bits: anyone who finds the bot can send /claim, so it must not be guessable.
+        self.claim_code = secrets.token_hex(8) if not cfg.has_admins() else ""
         self._lock = threading.Lock()
 
     # ==================== registration ====================
@@ -231,7 +232,8 @@ class AdminPanel:
             self._reply(message, "This bot already has an admin.")
             return
         parts = (message.text or "").split()
-        if len(parts) < 2 or parts[1].strip() != self.claim_code:
+        if (len(parts) < 2 or not self.claim_code
+                or not secrets.compare_digest(parts[1].strip(), self.claim_code)):
             self._reply(message, "❌ Wrong code. Check the server console for the claim code.")
             return
         uid = str(message.from_user.id)

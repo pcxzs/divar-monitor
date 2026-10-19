@@ -153,7 +153,7 @@ def main(argv=None) -> int:
             "!" * 60 + "\n"
         )
         print(banner, flush=True)
-        logger.warning(f"No admin configured — claim code is {panel.claim_code}")
+        logger.warning("No admin configured — claim code printed to the console")
 
     searches = cfg.searches()
     enabled = cfg.enabled_searches()

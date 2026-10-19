@@ -40,7 +40,7 @@ Requires Python 3.10+.
    bot without any admin — it prints a one-time claim code:
 
    ```
-   Open Telegram, message the bot and send:   /claim 74d2f7
+   Open Telegram, message the bot and send:   /claim 3f9c1a7be2d04c86
    ```
 
    Whoever sends that code becomes the admin. (`/id` tells anyone their id.)

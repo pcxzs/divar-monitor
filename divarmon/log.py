@@ -1,13 +1,26 @@
 """Logging setup shared by every module."""
 
 import logging
+import re
 from logging.handlers import RotatingFileHandler
 
 LOG_FILE = "divar_watcher.log"
 LOG_MAX_BYTES = 10 * 1024 * 1024
 LOG_BACKUPS = 3
 
+# A Telegram bot token is "<bot id>:<secret>". requests puts the full API URL
+# (https://api.telegram.org/bot<token>/sendMessage) into connection errors, so
+# without this every proxy blip would write the token into the log.
+BOT_TOKEN_RE = re.compile(r"\d{6,}:[A-Za-z0-9_-]{30,}")
+
 _configured = False
+
+
+class RedactingFormatter(logging.Formatter):
+    """Masks bot tokens in the final line, tracebacks included."""
+
+    def format(self, record: logging.LogRecord) -> str:
+        return BOT_TOKEN_RE.sub("<bot-token>", super().format(record))
 
 
 def setup(log_file: str = LOG_FILE, level: int = logging.INFO) -> None:
@@ -15,7 +28,7 @@ def setup(log_file: str = LOG_FILE, level: int = logging.INFO) -> None:
     global _configured
     if _configured:
         return
-    fmt = logging.Formatter("%(asctime)s [%(levelname)s] %(message)s")
+    fmt = RedactingFormatter("%(asctime)s [%(levelname)s] %(message)s")
     root = logging.getLogger()
     root.setLevel(level)
 
