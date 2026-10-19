@@ -1,0 +1,31 @@
+# Secrets and runtime data — written by the bot, never commit
+config.json
+config.json.bak*
+.env
+listings_state.json
+listings_state.json.bak*
+seen_listings.json
+seen_listings.json.bak*
+*.log
+*.log.*
+# atomic-save temp files and quarantined corrupt state
+*.tmp
+*.corrupt.*
+
+# Legacy single-file version, kept locally for reference
+divar_watcher.py.orig
+*.orig
+
+# Python
+__pycache__/
+*.py[cod]
+.venv
+venv/
+.python-version
+
+# Editors / tools
+.claude/
+graphify-out/
+.idea/
+.vscode/
+.DS_Store

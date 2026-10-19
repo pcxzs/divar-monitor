@@ -1,0 +1,18 @@
+{
+  "telegram_bot_token": "PASTE_YOUR_BOT_TOKEN_HERE",
+  "admin_ids": [],
+  "telegram_chat_ids": [],
+  "proxy": "",
+  "check_interval": 900,
+  "page_fetch_delay": 0.8,
+  "search_delay": 3.0,
+  "detail_fetch_delay": 0.35,
+  "max_pages_per_search": 5,
+  "max_retries": 5,
+  "notify_updates": true,
+  "deep_update_check": true,
+  "max_deep_checks": 40,
+  "paused": false,
+  "pending_requests": {},
+  "searches": []
+}
